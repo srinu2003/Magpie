@@ -1,8 +1,8 @@
 # Replit
 # Repl specific
 .replit
-.lock
-.toml
+*.lock
+*.toml
 .lock
 .toml
 

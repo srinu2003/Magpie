@@ -2,6 +2,7 @@ from os import getcwd
 from os.path import isfile
 from cryptography.fernet import Fernet
 
+
 class KeyNotFoundError(FileNotFoundError):
     def __init__(self, *args: object) -> None:
         super().__init__(f'''No key found in Dir: '{args[0]}'
@@ -9,7 +10,7 @@ New Key file generated at same location.''')
 
     def __str__(self) -> str:
         return super().__str__()
-    
+
 
 def generate_key() -> bytes:
     key = Fernet.generate_key()
@@ -18,18 +19,20 @@ def generate_key() -> bytes:
 
     return load_key()
 
+
 def load_key() -> bytes:
     try:
-        if(not isfile('./key.key')):
+        if not isfile('./key.key'):
             current_dir = getcwd()
-            raise KeyNotFoundError((current_dir))
+            raise KeyNotFoundError(current_dir)
     except KeyNotFoundError:
         return generate_key()
         # raise KeyNotFoundError(getcwd())
-    
+
     with open('key.key', 'rb') as key_file:
         key = key_file.read()
     return key
+
 
 # f = Fernet(generate_key())
 
@@ -37,6 +40,7 @@ def encrypt_message(message: str, key: bytes) -> str:
     f = Fernet(key)
     encrypted_message = f.encrypt(message.encode())
     return encrypted_message.decode()
+
 
 def decrypt_message(encrypted_message: str, key: bytes) -> str:
     f = Fernet(key)

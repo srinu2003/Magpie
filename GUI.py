@@ -24,15 +24,15 @@ app.title("Magpie")
 app.geometry('400x600')
 app.minsize(width=350, height=500)
 
-# lable
+# label
 greeting_label = ttk.Label(app, text="Welcome to")
 greeting_label.pack()
 
 # title
-title_lable = ttk.Label(app, text='CHAT Encrypter', font='calibri 24 bold')
-title_lable.pack()
+title_label = ttk.Label(app, text='CHAT Encrypter', font='calibre 24 bold')
+title_label.pack()
 
-# top enetry field
+# top entry field
 top_text_field = tk.Text(app, width=50, height=10, background='light blue')  # widget
 # top_text_field.pack(fill='x',padx=5,pady=2)
 top_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=10)
@@ -51,22 +51,21 @@ key_frame.pack(pady=10, side='top')
 # Button field
 button_frame = ttk.Frame(app)
 
-encrypt_button = ttk.Button(button_frame, text='Encrypt', command=lambda: print('Encrypt Presed')).pack(side='left',
-                                                                                                        padx=10)
-decrypt_button = ttk.Button(button_frame, text='Decrypt', command=browse_files).pack(side='left', padx=10)
+ttk.Button(button_frame, text='Encrypt', command=lambda: print('Encrypt Presed')).pack(side='left', padx=10)
+ttk.Button(button_frame, text='Decrypt', command=browse_files).pack(side='left', padx=10)
 
 button_frame.pack()
 # Output field
-output_lable = ttk.Label(app, text='output', font='calibri 24', textvariable='sinu')
+output_lable = ttk.Label(app, text='output', font='calibri 24', textvariable='str')
 
-# bottom enetry field
-botttom_text_field = tk.Text(app, width=50, height=10, background='light yellow')  # widget
-# botttom_text_field.pack(fill='x',padx=5,pady=2)
-botttom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=10)
+# bottom entry field
+bottom_text_field = tk.Text(app, width=50, height=10, background='light yellow')  # widget
+# bottom_text_field.pack(fill='x',padx=5,pady=2)
+bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=10)
 
 top = 5
-botttom = 5
-output_lable.pack(side='top', pady=[top, botttom])
+bottom = 5
+output_lable.pack(side='top', pady=[top, bottom])
 
 # Start the main event loop
 app.mainloop()

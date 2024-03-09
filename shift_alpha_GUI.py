@@ -1,22 +1,24 @@
 import tkinter as tk
 
+
 def encrypt():
-    message = message_text.get("1.0", "end-1c") # Get the message from the text widget
-    shift = int(shift_entry.get()) # Get the shift value from the entry widget
+    message = message_text.get("1.0", "end-1c")  # Get the message from the text widget
+    shift = int(shift_entry.get())  # Get the shift value from the entry widget
 
     encrypted_message = ""
     for char in message:
-        if char.isalpha(): # Encrypt only alphabetical characters
+        if char.isalpha():  # Encrypt only alphabetical characters
             shifted_char = chr((ord(char.upper()) - ord('A') + shift) % 26 + ord('A'))
-            if char.islower(): # Preserve the original case of the character
+            if char.islower():  # Preserve the original case of the character
                 encrypted_message += shifted_char.lower()
             else:
                 encrypted_message += shifted_char
         else:
             encrypted_message += char
 
-    result_text.delete("1.0", "end") # Clear the result text widget
-    result_text.insert("end", encrypted_message) # Update the result text widget
+    result_text.delete("1.0", "end")  # Clear the result text widget
+    result_text.insert("end", encrypted_message)  # Update the result text widget
+
 
 root = tk.Tk()
 root.title("Message Encryptor")

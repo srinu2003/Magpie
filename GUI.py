@@ -45,14 +45,15 @@ key_lable.pack(side='left', pady=0)
 entry = ttk.Entry(key_frame, show=u"\u25CF", width=32)  # ,textvariable='hellll')
 entry.pack(side='left', padx=10)
 
-key_frame.pack(pady=10, side='top',fill='x')
+key_frame.pack(pady=10, side='top', fill='x')
 
 # Radio button field
-radio_frame = ttk.Frame(app, relief = tk.GROOVE, padding = 10)
+radio_frame = ttk.Frame(app, relief=tk.GROOVE, padding=10)
 radio_bool = tk.BooleanVar(value=True)
-file_frame = ttk.Frame(app, relief = tk.GROOVE, padding = 10)
+file_frame = ttk.Frame(app, relief=tk.GROOVE, padding=10)
 
 debug_mode = True
+
 
 def radio_func():
     print(radio_bool.get())
@@ -62,37 +63,40 @@ def radio_func():
         else:
             print('Decrypt Selected')
 
+
 # widgets
-encrypt_radio = ttk.Radiobutton( radio_frame, 
-    text = 'Encrypt', 
-    value = True, 
-    command = radio_func, 
-    variable = radio_bool).pack(side='left',fill='y', padx = 20)
+encrypt_radio = (ttk.Radiobutton(radio_frame,
+                                 text='Encrypt',
+                                 value=True,
+                                 command=radio_func,
+                                 variable=radio_bool)
+                 .pack(side='left', fill='y', padx=20))
 
-decrypt_radio = ttk.Radiobutton( radio_frame, 
-	text = 'Decrypt', 
-	value = False, 
-	command = radio_func, 
-	variable = radio_bool).pack(side='left',fill='y', padx= 20)
+decrypt_radio = (ttk.Radiobutton(radio_frame,
+                                 text='Decrypt',
+                                 value=False,
+                                 command=radio_func,
+                                 variable=radio_bool)
+                 .pack(side='left', fill='y', padx=20))
 
-# radio_frame.pack(fill='x', pady=10, side='top')
 radio_frame.pack(side='left')
 
-open_file_button = ttk.Button(file_frame, text='Open File', command=browse_files).pack(side="top", padx=10, pady = 10)
-save_file_button = ttk.Button(file_frame, text='Save File', command=browse_files).pack(side="top", padx=10, pady = 10)
+open_file_button = (ttk.Button(file_frame, text='Open File', command=browse_files).
+                    pack(side="top", padx=10, pady=10))
+save_file_button = (ttk.Button(file_frame, text='Save File', command=browse_files).
+                    pack(side="top", padx=10, pady=10))
 file_frame.pack(fill='x', pady=10, side='right')
 
 # Output field
-output_lable = ttk.Label(app, text='output', font='calibri 24', textvariable='str')
+output_lable = ttk.Label(app, text='output', font='calibre 24', textvariable='str')
 
 # bottom entry field
 bottom_text_field = tk.Text(app, width=50, height=10, background='light yellow')  # widget
-# bottom_text_field.pack(fill='x',padx=5,pady=2)
 bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=10)
 
 top = 5
 bottom = 5
-output_lable.pack(side='top', pady=[top, bottom])
+output_lable.pack(side='top', pady=(top, bottom))
 
 # Start the main event loop
 app.mainloop()

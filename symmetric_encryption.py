@@ -6,7 +6,7 @@ from cryptography.fernet import Fernet
 class KeyNotFoundError(FileNotFoundError):
     def __init__(self, *args: object) -> None:
         super().__init__(f'''No key found in Dir: '{args[0]}'
-New Key file generated at same location.''')
+New Key file should be generated at same location.''')
 
     def __str__(self) -> str:
         return super().__str__()

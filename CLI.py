@@ -8,12 +8,12 @@ print("""
       """)
 
 while True:
-    option = input('Enter option:')
+    option = input('Enter option: ')
     match option[0]:
         case '1' | 'e' | 'E':
             # Text Encrypt
             message = input('Enter your message: ')
-            op = input("Want to generate a new key? (y/n):")
+            op = input("Want to generate a new key? (y/n): ")
             if op == 'y':
                 key = generate_key()
                 print(encrypt_message(message, key))
@@ -23,8 +23,8 @@ while True:
 
         case '2' | 'd' | 'D':
             # Text Decrypt
-            message = input('Enter Chiphered message: ')
-            op = input("Want to enter a key? (y/n):")
+            message = input('Enter Ciphered message: ')
+            op = input("Want to enter a key? (y/n): ")
             if op == 'y':
                 input_key = input('Enter your key: ')
                 print(decrypt_message(message, input_key.encode()))
@@ -37,4 +37,3 @@ while True:
         case _:
             print("Something's wrong with your input! Please try again.")
             # break
-

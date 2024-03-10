@@ -32,33 +32,24 @@ greeting_label.pack()
 title_label = ttk.Label(app, text='TEXT Encrypter', font='calibre 24 bold')
 title_label.pack(side='top')
 
-input_lable = ttk.Label(app, text="Enter your text:").pack(side='top',fill='x', padx=(10,0))
+input_lable = (ttk.Label(app, text="Enter your text:").
+               pack(side='top', fill='x', padx=(10, 0)))
 # top entry field
-top_text_field = tk.Text(app, width=50, height=10, background='light blue').pack(side='top', expand=True, fill='both', padx=10, pady=5)
+top_text_field = (tk.Text(app, width=50, height=10, background='light blue').
+                  pack(side='top', expand=True, fill='both', padx=10, pady=5))
 
-
-# key Frame 
+# key Frame
 key_frame = ttk.Frame(app)
 key_lable = ttk.Label(key_frame, text="Enter your KEY:")
 key_lable.pack(side='left', pady=0)
 
-key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=32)  # ,textvariable='hellll')
+key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=32)  # ,text variable='hell')
 key_entry.pack(side='left', padx=10)
 
 key_frame.pack(pady=10, side='top')
 
-
-
-
-
-
-
-
-
-
 # Options Frame
 options_frame = ttk.Frame(app, relief=tk.GROOVE, padding=(10, 5))
-
 
 # Radio button field
 radio_frame = ttk.Frame(options_frame, relief=tk.GROOVE, padding=10)
@@ -89,42 +80,35 @@ decrypt_radio = (ttk.Radiobutton(radio_frame,
                                  value=False,
                                  command=radio_func,
                                  variable=radio_bool)
-                 .pack(side='left', fill='y', padx=20,))
+                 .pack(side='left', fill='y', padx=20))
 
 radio_frame.pack(side='left')
 
 # convert button
-conevert_button = ttk.Button(options_frame, text='Convert')
-conevert_button.pack(side='left', padx=10)
+convert_button = ttk.Button(options_frame, text='Convert')
+convert_button.pack(side='left', padx=10)
 
-options_frame.pack(side='top', pady =10)
+options_frame.pack(side='top', pady=10)
 
 file_frame = ttk.Frame(options_frame, relief=tk.GROOVE, padding=5)
-
 
 open_file_button = (ttk.Button(file_frame, text='Open File', command=browse_files).
                     pack(side="top", pady=5))
 save_file_button = (ttk.Button(file_frame, text='Save File', command=browse_files).
                     pack(side="top", pady=5))
 
-file_frame.pack(expand=True,fill='x', pady=10, side='right')
+file_frame.pack(expand=True, fill='x', pady=10, side='right')
 
-
-
-
-
-
-
-
-output_lable = ttk.Label(app, text="Your Output:").pack(side='top',fill='x', padx=(10,0))
+output_lable = (ttk.Label(app, text="Your Output:").
+                pack(side='top', fill='x', padx=(10, 0)))
 # Output field
 
 # bottom entry field
-bottom_text_field = tk.Text(app, width=50, height=10, background='light yellow')
-bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=10)
+bottom_text_field = (tk.Text(app, width=50, height=10, background='light yellow').
+                     pack(side='top', expand=True, fill='both', padx=10, pady=5))
 
-
-credits_label = ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold').pack(side='bottom', pady=10)
+credits_label = (ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold').
+                 pack(side='bottom', pady=10))
 
 # Start the main event loop
 app.mainloop()

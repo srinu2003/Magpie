@@ -13,7 +13,7 @@ def browse_files() -> None:
 
 
 def take_text():
-    text = entry.get()
+    text = key_entry.get()
     greeting_label.config(text=f"Hello, {text}!")
 
 

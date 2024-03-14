@@ -1,6 +1,7 @@
 from os import getcwd
 from os.path import isfile
 from cryptography.fernet import Fernet
+from cryptography.fernet import InvalidToken
 
 
 class KeyNotFoundError(FileNotFoundError):
@@ -44,7 +45,14 @@ def encrypt_message(message: str, key: bytes) -> str:
 
 def decrypt_message(encrypted_message: str, key: bytes) -> str:
     f = Fernet(key)
-    decrypted_message = f.decrypt(encrypted_message)
+    try:
+        decrypted_message = f.decrypt(encrypted_message.encode())
+    except InvalidToken:
+        return "Invalid Key or Encrypted message"
+    except Exception as e:
+        return e
+
+    # decrypted_message = f.decrypt(encrypted_message)
     return decrypted_message.decode()
 
 # print(decrypt_message(encrypt_message('Hello',generate_key()),load_key()))

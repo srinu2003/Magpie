@@ -31,7 +31,7 @@ while True:
             else:
                 print(decrypt_message(message, load_key()))
 
-        case '3' | 'break' | 'b' | 'B':
+        case '3' | 'break' | 'b' | 'B' | 'exit' | 'Exit':
             print("Exiting text...(bye!)")
             break
         case _:

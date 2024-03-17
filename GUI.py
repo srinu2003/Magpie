@@ -23,7 +23,6 @@ def save_file() -> None:
     filename = filedialog.asksaveasfilename(initialdir="/", title="Save File",
                                             filetypes=(("Text files", "*.txt*"), ("all files", "*.*")))
     
-    
     if filename.partition('.')[2] != 'txt':
         if filename.partition('.')[2] == '':
             filename += '.txt'
@@ -38,24 +37,37 @@ def save_file() -> None:
 
 
 
-# def take_text():
-#     print(top_text_field.get('1.0', 'end-1c'))
-#     print(key.get())
-#     print(radio_bool.get())
+def convert_text():
+    top_text = top_text_field.get('1.0', 'end-1c')
+    print(top_text)
+    bottom_text = bottom_text_field.get('1.0', 'end-1c')
+    print(bottom_text)
+    print(key.get())
+    print(radio_bool.get())
     
-#     if radio_bool.get():
-#         print('Encrypt Selected')
-#         if key.get() == '':
-#             key.set(generate_key())
-#             print('Key Generated')
-#         else:
-#             print('Key Provided')
-#         print(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
+    if radio_bool.get():
+        # TO DO: Complete the encrypt function and also the decrypt function
+        print('Encrypt Selected')
+        if key.get() == '':
+            key.set(generate_key())
+            print('Key Generated')
+
+        bottom_text_field.insert(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
+        
+        print(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
+    else:
+        print('Decrypt Selected')
+        if key.get() == '':
+            key.set(load_key())
+            print('Key Loaded')
+        
+        bottom_text_field.set(decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
+        print(decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
         
 
 def clear_key() -> None:
     print(key.get())
-    # take_text()
+    # convert_text()
     key.set('')
 
 # app
@@ -68,8 +80,6 @@ app.minsize(width=450, height=500)
 
 
 # VARIABLES
-top_text = tk.StringVar()
-bottom_text = tk.StringVar()
 key = tk.StringVar()
 radio_bool = tk.BooleanVar(value=True)
 
@@ -85,7 +95,7 @@ input_lable = ttk.Label(app, text="Enter your text:")
 input_lable.pack(side='top', fill='x', padx=(10, 0))
 
 # top entry field
-top_text_field = tk.Text(app, width=50, height=5, background='light blue')
+top_text_field = tk.Text(app, width=50, height=5, background='light blue', wrap='word')
 top_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 
 # key Frame
@@ -138,7 +148,7 @@ decrypt_radio = (ttk.Radiobutton(radio_frame,
 radio_frame.pack(side='left')
 
 # convert button
-convert_button = ttk.Button(options_frame, text='Convert')
+convert_button = ttk.Button(options_frame, text='Convert', command = convert_text)
 convert_button.pack(side='left', padx=(10, 10))
 
 options_frame.pack(side='top', pady=10)
@@ -157,7 +167,7 @@ output_lable = (ttk.Label(app, text="Your Output:").
 # Output field
 
 # bottom entry field
-bottom_text_field = tk.Text(app, width=50, height=5, background='light yellow')
+bottom_text_field = tk.Text(app, width=50, height=5, background='light yellow', wrap='word')
 bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 
 credits_label = (ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold').

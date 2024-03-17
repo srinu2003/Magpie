@@ -98,7 +98,7 @@ file_frame = ttk.Frame(options_frame, relief=tk.GROOVE, padding=5)
 
 open_file_button = (ttk.Button(file_frame, text='Open File', command=browse_files).
                     pack(side="top", pady=5))
-save_file_button = (ttk.Button(file_frame, text='Save File', command=browse_files).
+save_file_button = (ttk.Button(file_frame, text='Save Text', command=browse_files).
                     pack(side="top", pady=5))
 
 file_frame.pack(expand=True, fill='x', pady=10, side='right')

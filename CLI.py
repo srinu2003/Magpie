@@ -50,14 +50,14 @@ while True:
                 msg = decrypt_message(message, load_key())
                 
                 if msg == InvalidToken:
-                    rprint("[red]Invalid Ciphered Text[/red]")
+                    rprint("[red]Ciphered Text did not match[/red]")
                 elif msg == BinasciiError:
                     rprint("[red]Invalid Bin Text[/red]")
                 else:
                     rprint('Message is:\n[blue]' + msg + '[/blue]')
 
         case '3' | 'break' | 'b' | 'B' | 'exit' | 'Exit':
-            rprint("[red]Exiting[/red] text... :wave:")
+            rprint("Thank you :heart:  for using Magpie. Exiting.. :wave:")
             break
         case _:
             rprint("[red]Something's wrong with your input! Please try again.[/red]")

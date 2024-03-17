@@ -1,39 +1,63 @@
 from symmetric_encryption import *
+from rich import print as rprint
+from rich.panel import Panel
+from rich.console import Console
 
-print("Welcome to the Text encryption and decryption tool.")
-print("""
-    1. Encrypt : (e/E)
-    2. Decrypt : (d/D)
-    3. Exit    : (b/B)
+console = Console()
+
+welcome_msg = Panel.fit("[bold yellow]Welcome to the Text encryption and decryption tool.", border_style="green")
+rprint(welcome_msg)
+rprint("""Here are the options:
+       
+    [green]1[/green] Encrypt : [green](e/E)[/green]
+    [blue]2[/blue] Decrypt : [blue](d/D)[/blue]
+    [red]3[/red] Exit    : [red](b/B)[/red]
       """)
 
 while True:
-    option = input('Enter option: ')
-    match option[0]:
+    option = console.input('[i bold]Enter option[/i bold]: ')
+    match option[0] if option else '':
         case '1' | 'e' | 'E':
             # Text Encrypt
-            message = input('Enter your message: ')
-            op = input("Want to generate a new key? (y/n): ")
+            message = console.input('Enter your [bold green]message[/bold green]: ')
+            op = console.input("[#D0B344]Want to generate a new key?[/#D0B344] (y/n): ")
             if op == 'y':
                 key = generate_key()
-                print(encrypt_message(message, key))
+                rprint('Ciphered Text:\n[bold green]' + encrypt_message(message, key) + '[/bold green]')
             else:
                 key = load_key()
-                print(encrypt_message(message, key))
+                rprint('Ciphered Text:\n[bold green]' + encrypt_message(message, key) + '[/bold green]')
 
         case '2' | 'd' | 'D':
             # Text Decrypt
-            message = input('Enter Ciphered message: ')
-            op = input("Want to enter a key? (y/n): ")
+            message = console.input('Enter [bold blue]Ciphered Text[/bold blue]: ')
+            op = console.input("[#D0B344]Want to enter key?[/#D0B344] (y/n): ")
             if op == 'y':
-                input_key = input('Enter your key: ')
-                print(decrypt_message(message, input_key.encode()))
+                input_key = console.input('Enter your [bold #D0B344]key:[/bold #D0B344] ')
+                if len(input_key) != 44:
+                    rprint("[red]Check the key and encrypted message. Key must be 32 url-safe base64.[/red]")
+                    continue
+
+                msg = decrypt_message(message, input_key.encode())
+                
+                if msg == InvalidToken:
+                    rprint("[red]Invalid Key[/red]")
+                elif msg == BinasciiError:
+                    rprint("[red]Invalid Ciphered Text[/red]")
+                else:
+                    rprint('Message is:\n[blue]' + msg + '[/blue]')
             else:
-                print(decrypt_message(message, load_key()))
+                msg = decrypt_message(message, load_key())
+                
+                if msg == InvalidToken:
+                    rprint("[red]Invalid Ciphered Text[/red]")
+                elif msg == BinasciiError:
+                    rprint("[red]Invalid Bin Text[/red]")
+                else:
+                    rprint('Message is:\n[blue]' + msg + '[/blue]')
 
         case '3' | 'break' | 'b' | 'B' | 'exit' | 'Exit':
-            print("Exiting text...(bye!)")
+            rprint("[red]Exiting[/red] text... :wave:")
             break
         case _:
-            print("Something's wrong with your input! Please try again.")
-            # break
+            rprint("[red]Something's wrong with your input! Please try again.[/red]")

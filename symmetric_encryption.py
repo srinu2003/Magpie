@@ -1,7 +1,9 @@
+from __future__ import annotations
 from os import getcwd
 from os.path import isfile
 from cryptography.fernet import Fernet
 from cryptography.fernet import InvalidToken
+from binascii import Error as BinasciiError
 
 
 class KeyNotFoundError(FileNotFoundError):
@@ -44,16 +46,33 @@ def encrypt_message(message: str, key: bytes) -> str:
 
 
 def decrypt_message(encrypted_message: str, key: bytes) -> str:
+    """
+    Decrypts an encrypted message using the provided key.
+
+    Args:
+        encrypted_message (str): The encrypted message to be decrypted.
+        key (bytes): The key used for decryption.
+
+    Returns:
+        str: The decrypted message.
+
+    Raises:
+        InvalidToken: If the provided key is invalid.
+        BinasciiError: If there is an error with the encrypted message.
+        Exception: If any other exception occurs during decryption.
+    """
     f = Fernet(key)
     try:
         decrypted_message = f.decrypt(encrypted_message.encode())
     except InvalidToken:
-        return "Invalid Key or Encrypted message"
+        return InvalidToken
+    except BinasciiError:
+        return BinasciiError
     except Exception as e:
         return e
 
     # decrypted_message = f.decrypt(encrypted_message)
     return decrypted_message.decode()
 
-# print(decrypt_message(encrypt_message('Hello',generate_key()),load_key()))
-# print(encrypt_message('Hello',generate_key()))
+# print(decrypt_message(encrypt_message('',load_key()),load_key()))
+# print(decrypt_message('',load_key()))

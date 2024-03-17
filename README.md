@@ -1,5 +1,7 @@
 # Text Encryption and Decryption Tool
 
+# CLI Tool
+
 This is a Python project that provides a text encryption and decryption tool using symmetric encryption.
 
 ## Usage
@@ -21,3 +23,5 @@ This is a Python project that provides a text encryption and decryption tool usi
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+# GUI Tool

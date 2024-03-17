@@ -21,8 +21,8 @@ def take_text():
 app = tk.Tk()
 app.title("Magpie")
 # app.geometry("300x150") # for 730p 'ish screens
-app.geometry('450x700')
-app.minsize(width=450, height=700)
+app.geometry('550x500')
+app.minsize(width=450, height=500)
 
 # label
 greeting_label = ttk.Label(app, text="Welcome to")
@@ -35,17 +35,19 @@ title_label.pack(side='top')
 input_lable = (ttk.Label(app, text="Enter your text:").
                pack(side='top', fill='x', padx=(10, 0)))
 # top entry field
-top_text_field = (tk.Text(app, width=50, height=10, background='light blue').
+top_text_field = (tk.Text(app, width=50, height=5, background='light blue').
                   pack(side='top', expand=True, fill='both', padx=10, pady=5))
 
 # key Frame
 key_frame = ttk.Frame(app)
+
 key_lable = ttk.Label(key_frame, text="Enter your KEY:")
 key_lable.pack(side='left', pady=0)
 
 key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=32)  # ,text variable='hell')
 key_entry.pack(side='left', padx=10)
 
+key_clear_button = ttk.Button(key_frame,text='Clear Key').pack()
 key_frame.pack(pady=10, side='top')
 
 # Options Frame
@@ -86,7 +88,7 @@ radio_frame.pack(side='left')
 
 # convert button
 convert_button = ttk.Button(options_frame, text='Convert')
-convert_button.pack(side='left', padx=10)
+convert_button.pack(side='left', padx=(10,10))
 
 options_frame.pack(side='top', pady=10)
 
@@ -104,7 +106,7 @@ output_lable = (ttk.Label(app, text="Your Output:").
 # Output field
 
 # bottom entry field
-bottom_text_field = (tk.Text(app, width=50, height=10, background='light yellow').
+bottom_text_field = (tk.Text(app, width=50, height=5, background='light yellow').
                      pack(side='top', expand=True, fill='both', padx=10, pady=5))
 
 credits_label = (ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold').

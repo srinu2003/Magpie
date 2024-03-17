@@ -11,4 +11,9 @@ def print_hi(name):
 if __name__ == '__main__':
     print_hi('PyCharm')
 
+# filename = 'C:/Users/tsrin/PycharmProjects/srinu.csv'
+# print(filename.split('.')[-1])
+# print(filename.endswith('.txt'))
+# print(filename.partition('.')[-1])
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

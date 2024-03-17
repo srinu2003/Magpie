@@ -9,8 +9,8 @@ def browse_files() -> None:
     filename = filedialog.askopenfilename(initialdir = "/", title="Select a File",
                                           filetypes = (("Text files", "*.txt*"), ("all files", "*.*")))
     
-    # Open file
-    with open(filename+'.txt', 'r') as file:
+    # Open and read file
+    with open(filename, 'r') as file:
         print(top_text_field.get('1.0', 'end-1c'))
         top_text_field.delete('1.0', 'end')
         top_text = file.read()
@@ -20,12 +20,20 @@ def browse_files() -> None:
 
 
 def save_file() -> None:
-    filename = filedialog.asksaveasfilename(initialdir = "/", title="Select a File",
-                                          filetypes = (("Text files", "*.txt*"), ("all files", "*.*")))
+    filename = filedialog.asksaveasfilename(initialdir="/", title="Save File",
+                                            filetypes=(("Text files", "*.txt*"), ("all files", "*.*")))
     
-    # Open file
-    with open(filename+'txt', 'w') as file:
+    
+    if filename.partition('.')[2] != 'txt':
+        if filename.partition('.')[2] == '':
+            filename += '.txt'
+        else:
+            filename = filename.partition('.')[0] + '.txt'
+
+    # Open and write file
+    with open(filename, 'w') as file:
         file.write(bottom_text_field.get('1.0', 'end-1c'))
+    
     print(filename)
 
 

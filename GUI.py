@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter.ttk import Frame
+
+
 # import ttkbootstrap as ttk
-from symmetric_encryption import *
+# from symmetric_encryption import *
 
 
 def browse_files() -> None:
@@ -39,15 +42,16 @@ top_text_field = (tk.Text(app, width=50, height=5, background='light blue').
                   pack(side='top', expand=True, fill='both', padx=10, pady=5))
 
 # key Frame
-key_frame = ttk.Frame(app)
+key_frame: Frame = ttk.Frame(app)
 
-key_lable = ttk.Label(key_frame, text="Enter your KEY:")
-key_lable.pack(side='left', pady=0)
+key_lable: object = (ttk.Label(key_frame, text="Enter your KEY:").
+                     pack(side='left', pady=0))
 
-key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=32)  # ,text variable='hell')
-key_entry.pack(side='left', padx=10)
+key_entry = (ttk.Entry(key_frame, show=u"\u25CF", width=32)
+             .pack(side='left', padx=10))
 
-key_clear_button = ttk.Button(key_frame,text='Clear Key').pack()
+key_clear_button: object = (ttk.Button(key_frame, text='Clear Key').
+                            pack())
 key_frame.pack(pady=10, side='top')
 
 # Options Frame
@@ -88,7 +92,7 @@ radio_frame.pack(side='left')
 
 # convert button
 convert_button = ttk.Button(options_frame, text='Convert')
-convert_button.pack(side='left', padx=(10,10))
+convert_button.pack(side='left', padx=(10, 10))
 
 options_frame.pack(side='top', pady=10)
 

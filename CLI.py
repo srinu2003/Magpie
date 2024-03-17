@@ -34,7 +34,7 @@ while True:
             op = console.input("[#D0B344]Want to enter key?[/#D0B344] (y/n): ")
             if op == 'y':
                 input_key = console.input('Enter your [bold #D0B344]key:[/bold #D0B344] ')
-                if len(input_key) != 44:
+                if len(input_key) != 44: # 32 url-safe base64 to check key length
                     rprint("[red]Check the key and encrypted message. Key must be 32 url-safe base64.[/red]")
                     continue
 

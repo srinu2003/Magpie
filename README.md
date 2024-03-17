@@ -1,5 +1,9 @@
 # Text Encryption and Decryption Tool
 
+## Setup
+```
+pip install -r requirements.txt
+```
 # CLI Tool
 
 This is a Python project that provides a text encryption and decryption tool using symmetric encryption.
@@ -11,7 +15,7 @@ This is a Python project that provides a text encryption and decryption tool usi
 3. Choose one of the following options:
     - Encrypt a message: Enter `1`, `e`, or `E`.
     - Decrypt a message: Enter `2`, `d`, or `D`.
-    - Exit the tool: Enter `3`, `break`, `b`, or `B`.
+    - Exit the tool: Enter `3`, `break`, `b`, `B`, `exit`, or `Exit`.
 4. Follow the prompts to enter the necessary information for encryption or decryption.
 5. The tool will display the encrypted or decrypted message based on the chosen option.
 
@@ -19,6 +23,7 @@ This is a Python project that provides a text encryption and decryption tool usi
 
 - Python 3.x
 - The `symmetric_encryption` module
+- The `rich` module
 
 ## License
 

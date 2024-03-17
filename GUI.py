@@ -3,8 +3,6 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter.ttk import Frame
 
-
-# import ttkbootstrap as ttk
 # from symmetric_encryption import *
 
 
@@ -44,11 +42,11 @@ top_text_field = (tk.Text(app, width=50, height=5, background='light blue').
 # key Frame
 key_frame: Frame = ttk.Frame(app)
 
-key_lable: object = (ttk.Label(key_frame, text="Enter your KEY:").
-                     pack(side='left', pady=0))
+key_lable = ttk.Label(key_frame, text="Enter your KEY:")
+key_lable.pack(side='left', pady=0)
 
-key_entry = (ttk.Entry(key_frame, show=u"\u25CF", width=32)
-             .pack(side='left', padx=10))
+key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=32)
+key_entry.pack(side='left', padx=10)
 
 key_clear_button: object = (ttk.Button(key_frame, text='Clear Key').
                             pack())

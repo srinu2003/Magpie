@@ -1,11 +1,12 @@
 from symmetric_encryption import (
-                                    generate_key, 
-                                    load_key, 
-                                    encrypt_message,
-                                    decrypt_message, 
-                                    InvalidToken,
-                                    BinasciiError
+    generate_key, 
+    load_key, 
+    encrypt_message,
+    decrypt_message, 
+    InvalidToken,
+    BinasciiError
 )
+
 from rich import print as rprint
 from rich.panel import Panel
 from rich.console import Console

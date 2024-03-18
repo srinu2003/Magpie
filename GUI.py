@@ -6,17 +6,21 @@ from symmetric_encryption import generate_key, load_key, encrypt_message, decryp
 
 
 def browse_files() -> None:
-    filename = filedialog.askopenfilename(initialdir = "/", title="Select a File",
+    try:
+        filename = filedialog.askopenfilename(initialdir = "/", title="Select a File",
                                           filetypes = (("Text files", "*.txt*"), ("all files", "*.*")))
-    
-    # Open and read file
-    with open(filename, 'r') as file:
-        print(top_text_field.get('1.0', 'end-1c'))
-        top_text_field.delete('1.0', 'end')
-        top_text = file.read()
-        top_text_field.insert('1.0', top_text)
-        print(top_text_field.get('1.0', 'end-1c'))
-    print(filename)
+
+        # Open and read file
+        with open(filename, 'r') as file:
+            print(top_text_field.get('1.0', 'end-1c'))
+            top_text_field.delete('1.0', 'end')
+            top_text = file.read()
+            top_text_field.insert('1.0', top_text)
+            print(top_text_field.get('1.0', 'end-1c'))
+        print(filename)
+    except FileNotFoundError:
+        print('No file selected')
+        return None
 
 
 def save_file() -> None:
@@ -38,7 +42,7 @@ def save_file() -> None:
 
 
 
-def convert_text():
+def convert_text() -> None:
     top_text = top_text_field.get('1.0', 'end-1c')
     print(top_text)
     bottom_text = bottom_text_field.get('1.0', 'end-1c')
@@ -48,52 +52,67 @@ def convert_text():
     
     if radio_bool.get():
         # TO DO: Complete the encrypt function and also the decrypt function
-        print('Encrypt Selected')
+        if top_text_field.get('1.0', 'end-1c') == '':
+            return None
         if key.get() == '':
             key.set(generate_key().decode())
             print('Key Generated')
 
-            bottom_text_field.insert('1.0', encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
+        _key = key.get()
+        plain_text = top_text_field.get('1.0', 'end-1c')
+        cipher_text = encrypt_message(plain_text, _key.encode())
+
+        bottom_text_field.delete('1.0', 'end')
+        bottom_text_field.insert('1.0', cipher_text)
         
-        print(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
+        print(cipher_text)
     else:
         print('Decrypt Selected')
         if key.get() == '':
             key.set(load_key().decode())
             print('Key Loaded')
+
+        _key = key.get()
+        cipher_text = top_text_field.get('1.0', 'end-1c')
+
         # Extract the decrypted message from the result based on its type
-            decrypted_message = decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode())
-            
-            # Check the type of the decrypted message
-            if isinstance(decrypted_message, str):
-                # Insert the decrypted message as a string
-                bottom_text_field.insert('1.0', decrypted_message)
-            elif isinstance(decrypted_message, InvalidToken):
-                print('Invalid Token error occurred')
-                # Handle InvalidToken error
-            elif isinstance(decrypted_message, Exception):
-                print('Exception occurred during decryption')
-                # Handle other exceptions
-            elif isinstance(decrypted_message, BinasciiError):
-                print('Binascii Error occurred')
-                # Handle BinasciiError
-            else:
-                print('Unknown error occurred')
-                # Handle other unknown errors
-        print(decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
+        plain_text = decrypt_message(cipher_text, _key.encode())
+        
+        # Check the type of the decrypted message
+        if isinstance(plain_text, str):
+            # Insert the decrypted message as a string
+            bottom_text_field.delete('1.0', 'end')
+            bottom_text_field.insert('1.0', plain_text)
+        elif isinstance(plain_text, InvalidToken):
+            print('Invalid Token error occurred')
+            # Handle InvalidToken error
+        elif isinstance(plain_text, Exception):
+            print('Exception occurred during decryption')
+            # Handle other exceptions
+        elif isinstance(plain_text, BinasciiError):
+            print('Binascii Error occurred')
+            # Handle BinasciiError
+        else:
+            print('Unknown error occurred')
+            # Handle other unknown errors
+        print(plain_text)
         
 
 def clear_key() -> None:
     print(key.get())
-    # convert_text()
     key.set('')
+    # convert_text()
+
+def get_key() -> None:
+    key.set(load_key().decode())
+
 
 # app
 app = tk.Tk()
 app.title("Magpie")
 # app.geometry("300x150") # for 730p 'ish screens
 app.geometry('550x500')
-app.minsize(width=450, height=500)
+app.minsize(width=500, height=500)
 
 
 
@@ -115,20 +134,26 @@ input_lable.pack(side='top', fill='x', padx=(10, 0))
 # top entry field
 top_text_field = tk.Text(app, width=50, height=5, background='light blue', wrap='word')
 top_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
+top_text_field.focus()
 
 # key Frame
 key_frame = ttk.Frame(app)
 
 key_lable = ttk.Label(key_frame, text="Enter your KEY:")
-key_lable.pack(side='left', pady=0)
+key_lable.pack(side='left', padx=(10,0), pady=0)
 
-key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=32, textvariable=key)
+key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=30, textvariable=key)
 key_entry.pack(side='left', padx=10)
+key_entry.pack_forget()
+key_entry.pack(side='left', fill="x",expand = True, padx=10)
 
+
+key_load_button: object = ttk.Button(key_frame, text='Load Key', command=get_key)
+key_load_button.pack(side='right', padx=10)
 key_clear_button: object = ttk.Button(key_frame, text='Clear Key', command=clear_key)
-key_clear_button.pack()
+key_clear_button.pack(side='right', padx=10)
 
-key_frame.pack(pady=10, side='top')
+key_frame.pack(pady=10, side='top', fill='x', anchor='center')
 
 # Options Frame
 options_frame = ttk.Frame(app, relief=tk.GROOVE, padding=(10, 5))

@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+from symmetric_encryption import generate_key, load_key, encrypt_message, decrypt_message, InvalidToken, BinasciiError
 
-from symmetric_encryption import *
 
 
 def browse_files() -> None:
@@ -24,6 +24,7 @@ def save_file() -> None:
                                             filetypes=(("Text files", "*.txt*"), ("all files", "*.*")))
     
     if filename.partition('.')[2] != 'txt':
+        # C:\\users\tsrin\downloaded_files\test.txt.csv
         if filename.partition('.')[2] == '':
             filename += '.txt'
         else:
@@ -49,20 +50,37 @@ def convert_text():
         # TO DO: Complete the encrypt function and also the decrypt function
         print('Encrypt Selected')
         if key.get() == '':
-            key.set(generate_key())
+            key.set(generate_key().decode())
             print('Key Generated')
 
-        bottom_text_field.insert(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
+            bottom_text_field.insert('1.0', encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
         
-        print(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
+        print(encrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
     else:
         print('Decrypt Selected')
         if key.get() == '':
-            key.set(load_key())
+            key.set(load_key().decode())
             print('Key Loaded')
-        
-        bottom_text_field.set(decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
-        print(decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get()))
+        # Extract the decrypted message from the result based on its type
+            decrypted_message = decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode())
+            
+            # Check the type of the decrypted message
+            if isinstance(decrypted_message, str):
+                # Insert the decrypted message as a string
+                bottom_text_field.insert('1.0', decrypted_message)
+            elif isinstance(decrypted_message, InvalidToken):
+                print('Invalid Token error occurred')
+                # Handle InvalidToken error
+            elif isinstance(decrypted_message, Exception):
+                print('Exception occurred during decryption')
+                # Handle other exceptions
+            elif isinstance(decrypted_message, BinasciiError):
+                print('Binascii Error occurred')
+                # Handle BinasciiError
+            else:
+                print('Unknown error occurred')
+                # Handle other unknown errors
+        print(decrypt_message(top_text_field.get('1.0', 'end-1c'), key.get().encode()))
         
 
 def clear_key() -> None:

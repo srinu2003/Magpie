@@ -45,7 +45,7 @@ def encrypt_message(message: str, key: bytes) -> str:
     return encrypted_message.decode()
 
 
-def decrypt_message(encrypted_message: str, key: bytes) -> str:
+def decrypt_message(encrypted_message: str, key: bytes) -> str | type[InvalidToken] | Exception | type[BinasciiError]:
     """
     Decrypts an encrypted message using the provided key.
 
@@ -71,7 +71,6 @@ def decrypt_message(encrypted_message: str, key: bytes) -> str:
     except Exception as e:
         return e
 
-    # decrypted_message = f.decrypt(encrypted_message)
     return decrypted_message.decode()
 
 # print(decrypt_message(encrypt_message('',load_key()),load_key()))

@@ -3,14 +3,14 @@ from tkinter import ttk
 from tkinter import filedialog
 from symmetric_encryption import generate_key, load_key, encrypt_message, decrypt_message, InvalidToken, BinasciiError
 
-
 debug_mode = True
+
 
 def browse_files() -> None:
     key_lable.setvar(key.get())
     try:
-        filename = filedialog.askopenfilename(initialdir = "/", title="Select a File",
-                                          filetypes = (("Text files", "*.txt*"), ("all files", "*.*")))
+        filename = filedialog.askopenfilename(initialdir="/", title="Select a File",
+                                              filetypes=(("Text files", "*.txt*"), ("all files", "*.*")))
 
         # Open and read file
         with open(filename, 'r') as file:
@@ -32,7 +32,7 @@ def save_file() -> None:
         # TODO: Handle empty filename
         return None
     if filename.partition('.')[2] != 'txt':
-        # C:\\users\tsrin\downloaded_files\test.txt.csv
+        # C:\\users\%USERNAME%\downloaded_files\test.txt.csv
         if filename.partition('.')[2] == '':
             filename += '.txt'
         else:
@@ -41,9 +41,8 @@ def save_file() -> None:
     # Open and write file
     with open(filename, 'w') as file:
         file.write(bottom_text_field.get('1.0', 'end-1c'))
-    
-    print(filename)
 
+    print(filename)
 
 
 def convert_text() -> None:
@@ -53,12 +52,12 @@ def convert_text() -> None:
     print(bottom_text)
     print(key.get())
     print(radio_bool.get())
-    
+
     if radio_bool.get():
         # TODO: Complete the encrypt function and also the decrypt function
         if top_text_field.get('1.0', 'end-1c') == '':
             return None
-        
+
         if key.get() == '':
             get_key()
 
@@ -70,7 +69,7 @@ def convert_text() -> None:
         bottom_text_field.delete('1.0', 'end')
         bottom_text_field.insert('1.0', cipher_text)
         bottom_text_field.config(state='disabled')  # Disable editing
-        
+
         print(cipher_text)
     else:
         print('Decrypt Selected')
@@ -105,17 +104,20 @@ def convert_text() -> None:
         else:
             print('Unknown error occurred')
             # Handle other unknown errors
-        print(isinstance(plain_text, InvalidToken),plain_text == InvalidToken,plain_text)
-        
+        print(isinstance(plain_text, InvalidToken), plain_text == InvalidToken, plain_text)
+
+
 def new_key() -> None:
     key.set(generate_key().decode())
     key_lable_text.set('Using KEY:  ' + key.get() + " (Generated)")
     return None
 
+
 def clear_key() -> None:
     print(key.get())
     key.set('')
     # convert_text()
+
 
 def get_key() -> None:
     key.set(load_key().decode())
@@ -134,7 +136,8 @@ app.minsize(width=685, height=500)
 # VARIABLES
 key = tk.StringVar()
 radio_bool = tk.BooleanVar(value=True)
-key_lable_text: tk.StringVar = tk.StringVar(value='Using KEY: ' + key.get() + " (Not yet loaded. Will be loaded on conversion.)")
+key_lable_text: tk.StringVar = tk.StringVar(
+    value='Using KEY: ' + key.get() + " (Not yet loaded. Will be loaded on conversion.)")
 
 # label
 greeting_label = ttk.Label(app, text="Welcome to")
@@ -148,17 +151,17 @@ input_lable = ttk.Label(app, text="Enter your text:")
 input_lable.pack(side='top', fill='x', padx=(10, 0))
 
 # top entry field
-top_text_field = tk.Text(app, width=50, height=5, background='light blue', wrap='word',maxundo=15,undo=True, yscrollcommand=True)
+top_text_field = tk.Text(app, width=50, height=5, background='light blue', wrap='word', maxundo=15, undo=True,)
 top_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 top_text_field.focus()
 
 # key Frame
 key_frame = ttk.Frame(app)
 
-key_lable = ttk.Label(key_frame, textvariable=key_lable_text,font='courier 8 bold')
-key_lable.pack(side='left', padx=(10,0), pady=0)
+key_lable = ttk.Label(key_frame, textvariable=key_lable_text, font='courier 8 bold')
+key_lable.pack(side='left', padx=(10, 0), pady=0)
 
-key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=30, textvariable=key,foreground='black')
+key_entry = ttk.Entry(key_frame, show=u"\u25CF", width=30, textvariable=key, foreground='black')
 # key_entry = ttk.Entry(key_frame, width=30, textvariable=key,foreground='green')
 # TODO: Validate the key length and display a warning if the key length is less than 44
 key_entry.configure(validate='key', validatecommand=(key_entry.register(lambda text: len(text) <= 44), "%P"))
@@ -173,11 +176,11 @@ key_entry.configure(validate='key', validatecommand=(key_entry.register(lambda t
 # key_entry.configure(validatecommand=(key_entry.register(validate_key_length), "%P"))
 
 
-key_load_button: object = ttk.Button(key_frame, text='Load Key', command=get_key,state='normal')
+key_load_button: object = ttk.Button(key_frame, text='Load Key', command=get_key, state='normal')
 key_load_button.pack(side='right', padx=10)
 
-key_clear_button: object = ttk.Button(key_frame, text='Generate Key', command=new_key,state='normal')
-key_clear_button.pack(side='right', padx=10) 
+key_clear_button: object = ttk.Button(key_frame, text='Generate Key', command=new_key, state='normal')
+key_clear_button.pack(side='right', padx=10)
 
 key_frame.pack(pady=10, side='top', fill='x', anchor='center')
 
@@ -187,21 +190,21 @@ options_frame = ttk.Frame(app, relief=tk.GROOVE, padding=(10, 5))
 # Radio button field
 radio_frame = ttk.Frame(options_frame, relief=tk.GROOVE, padding=10)
 
+
 def radio_func():
     if radio_bool.get():
         get_key()
         key_entry.pack_forget()
-        key_load_button.configure(state='normal')
         key_clear_button.configure(state='normal', text='Generate Key', command=new_key)
-        
+
     else:
         key_lable_text.set('Enter your KEY:')
-        key_entry.pack(side='left', fill="x",expand = True, padx=10)
+        key_entry.pack(side='left', fill="x", expand=True, padx=10)
         key.set('')
         key_clear_button.configure(text='Clear Key', command=clear_key)
 
     if debug_mode:
-        print('radio_bool:',radio_bool.get())
+        print('radio_bool:', radio_bool.get())
         if radio_bool.get():
             print('Encrypt Selected')
         else:
@@ -227,7 +230,7 @@ radio_frame.pack(side='left')
 # radio_func()
 
 # convert button
-convert_button = ttk.Button(options_frame, text='Convert', command = convert_text)
+convert_button = ttk.Button(options_frame, text='Convert', command=convert_text)
 convert_button.pack(side='left', padx=(10, 10))
 
 options_frame.pack(side='top', pady=10)
@@ -246,7 +249,7 @@ output_lable = (ttk.Label(app, text="Your Output:").
 # Output field
 
 # bottom entry field
-bottom_text_field = tk.Text(app, width=50, height=5, background='light yellow', wrap='word', yscrollcommand=True)
+bottom_text_field = tk.Text(app, width=50, height=5, background='light yellow', wrap='word')
 bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 
 credits_label = (ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold').

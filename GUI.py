@@ -151,7 +151,7 @@ input_lable = ttk.Label(app, text="Enter your text:")
 input_lable.pack(side='top', fill='x', padx=(10, 0))
 
 # top entry field
-top_text_field = tk.Text(app, width=50, height=5, background='light blue', wrap='word', maxundo=15, undo=True,)
+top_text_field = tk.Text(app, width=50, height=5, background='light blue', wrap='word', maxundo=15, undo=True, )
 top_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 top_text_field.focus()
 

@@ -7,6 +7,7 @@ from binascii import Error as BinasciiError
 
 
 class KeyNotFoundError(FileNotFoundError):
+    """Raised when the key file is not found in the current directory."""
     def __init__(self, *args: object) -> None:
         super().__init__(f'''No key found in Dir: '{args[0]}'
 New Key file should be generated at same location.''')
@@ -16,6 +17,12 @@ New Key file should be generated at same location.''')
 
 
 def generate_key() -> bytes:
+    """
+    Generates a symmetric encryption key and saves it to a file named 'key.key'.
+
+    Returns:
+        bytes: The generated encryption key.
+    """
     key = Fernet.generate_key()
     with open('key.key', 'wb') as key_file:
         key_file.write(key)
@@ -24,6 +31,14 @@ def generate_key() -> bytes:
 
 
 def load_key() -> bytes:
+    """
+    Load the encryption key from a file.
+
+    If the key file does not exist, a new key will be generated.
+
+    Returns:
+        bytes: The encryption key.
+    """
     try:
         if not isfile('./key.key'):
             current_dir = getcwd()
@@ -40,6 +55,17 @@ def load_key() -> bytes:
 # f = Fernet(generate_key())
 
 def encrypt_message(message: str, key: bytes) -> str:
+    """
+    Encrypts a message using symmetric encryption.
+
+    Args:
+        message (str): The message to be encrypted.
+        key (bytes): The encryption key.
+
+    Returns:
+        str: The encrypted message.
+
+    """
     f = Fernet(key)
     encrypted_message = f.encrypt(message.encode())
     return encrypted_message.decode()

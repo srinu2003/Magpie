@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from symmetric_encryption import generate_key, load_key, encrypt_message, decrypt_message, InvalidToken, BinasciiError
 
-debug_mode = True
+debug_mode = True # Set to False to disable debug mode
 
 
 def browse_files() -> None:

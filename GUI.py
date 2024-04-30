@@ -56,6 +56,7 @@ def convert_text() -> None:
     if radio_bool.get():
         # TODO: Complete the encrypt function and also the decrypt function
         if top_text_field.get('1.0', 'end-1c') == '':
+            credits_label.config(text='Magpie: No text to encrypt', foreground='red')
             return None
 
         if key.get() == '':
@@ -64,6 +65,7 @@ def convert_text() -> None:
         _key = key.get()
         plain_text = top_text_field.get('1.0', 'end-1c')
         cipher_text = encrypt_message(plain_text, _key.encode())
+        credits_label.config(text='Magpie: Encryption successful', foreground='green')
 
         bottom_text_field.config(state='normal')  # Enable editing
         bottom_text_field.delete('1.0', 'end')
@@ -92,18 +94,19 @@ def convert_text() -> None:
             bottom_text_field.delete('1.0', 'end')
             bottom_text_field.insert('1.0', plain_text)
             bottom_text_field.config(state='disabled')  # Disable editing
+            credits_label.config(text='Magpie: Decryption successful',  foreground= 'green')
         elif isinstance(plain_text, InvalidToken):
             print('Invalid Token error occurred')
-            # Handle InvalidToken error
+            credits_label.config(text='Magpie: Invalid Token error occurred', foreground='red')
         elif isinstance(plain_text, Exception):
             print('Exception occurred during decryption')
-            # Handle other exceptions
+            credits_label.config(text='Magpie: Exception occurred during decryption', foreground='red')
         elif isinstance(plain_text, BinasciiError):
             print('Binascii Error occurred')
-            # Handle BinasciiError
+            credits_label.config(text='Magpie: Binascii Error occurred', foreground='red')
         else:
             print('Unknown error occurred')
-            # Handle other unknown errors
+            credits_label.config(text='Magpie: Unknown error occurred', foreground='red')
         print(isinstance(plain_text, InvalidToken), plain_text == InvalidToken, plain_text)
 
 
@@ -252,8 +255,8 @@ output_lable = (ttk.Label(app, text="Your Output:").
 bottom_text_field = tk.Text(app, width=50, height=5, background='light yellow', wrap='word')
 bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 
-credits_label = (ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold').
-                 pack(side='bottom', pady=10))
+credits_label = ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold')
+credits_label.pack(side='bottom', pady=10)
 
 # print(key_lable.winfo_reqwidth() , key_load_button.winfo_reqwidth() , key_clear_button.winfo_reqwidth())
 # print(10 

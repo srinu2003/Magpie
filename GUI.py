@@ -3,8 +3,6 @@ from tkinter import ttk
 from tkinter import filedialog
 from symmetric_encryption import generate_key, load_key, encrypt_message, decrypt_message, InvalidToken, BinasciiError
 
-debug_mode = False # Set to False to disable debug mode
-
 
 def browse_files() -> None:
     key_lable.setvar(key.get())
@@ -14,14 +12,10 @@ def browse_files() -> None:
 
         # Open and read file
         with open(filename, 'r') as file:
-            # print(top_text_field.get('1.0', 'end-1c'))
             top_text_field.delete('1.0', 'end')
             top_text = file.read()
             top_text_field.insert('1.0', top_text)
-            # print(top_text_field.get('1.0', 'end-1c'))
-        # print(filename)
     except FileNotFoundError:
-        # print('No file selected')
         return None
 
 
@@ -41,18 +35,11 @@ def save_file() -> None:
     # Open and write file
     with open(filename, 'w') as file:
         file.write(bottom_text_field.get('1.0', 'end-1c'))
-    if debug_mode:
-        print(filename)
 
 
 def convert_text() -> None:
     top_text = top_text_field.get('1.0', 'end-1c')
     bottom_text = bottom_text_field.get('1.0', 'end-1c')
-    if debug_mode:
-        print(top_text)
-        print(bottom_text)
-        print(key.get())
-        print(radio_bool.get())
 
     if radio_bool.get():
         # TODO: Complete the encrypt function and also the decrypt function
@@ -88,20 +75,16 @@ def convert_text() -> None:
             bottom_text_field.delete('1.0', 'end')
             bottom_text_field.insert('1.0', plain_text)
             bottom_text_field.config(state='disabled')  # Disable editing
-            credits_label.config(text='Magpie: Decryption successful',  foreground= 'green')
+            credits_label.config(text='Magpie: Decryption successful', foreground='green')
         elif isinstance(plain_text, InvalidToken):
-            # print('Invalid Token error occurred')
             credits_label.config(text='Magpie: Invalid Token error occurred', foreground='red')
         elif isinstance(plain_text, Exception):
-            # print('Exception occurred during decryption')
             credits_label.config(text='Magpie: Exception occurred during decryption', foreground='red')
         elif isinstance(plain_text, BinasciiError):
-            # print('Binascii Error occurred')
             credits_label.config(text='Magpie: Binascii Error occurred', foreground='red')
         else:
-            # print('Unknown error occurred')
-            credits_label.config(text='Magpie: Unknown error occurred. Please enter correct Cipher text.', foreground='red')
-        # print(isinstance(plain_text, InvalidToken), plain_text == InvalidToken, plain_text)
+            credits_label.config(text='Magpie: Unknown error occurred. Please enter correct Cipher text.',
+                                 foreground='red')
 
 
 def new_key() -> None:
@@ -111,7 +94,6 @@ def new_key() -> None:
 
 
 def clear_key() -> None:
-    # print(key.get())
     key.set('')
     # convert_text()
 
@@ -200,13 +182,6 @@ def radio_func():
         key.set('')
         key_clear_button.configure(text='Clear Key', command=clear_key)
 
-    if debug_mode:
-        print('radio_bool:', radio_bool.get())
-        if radio_bool.get():
-            print('Encrypt Selected')
-        else:
-            print('Decrypt Selected')
-
 
 # options
 encrypt_radio = (ttk.Radiobutton(radio_frame,
@@ -251,16 +226,6 @@ bottom_text_field.pack(side='top', expand=True, fill='both', padx=10, pady=5)
 
 credits_label = ttk.Label(app, text="Made by: Magpie", font='calibre 10 bold')
 credits_label.pack(side='bottom', pady=10)
-
-# print(key_lable.winfo_reqwidth() , key_load_button.winfo_reqwidth() , key_clear_button.winfo_reqwidth())
-# print(10 
-#       + key_lable.winfo_reqwidth() 
-#       + 10 
-#       + key_load_button.winfo_reqwidth() 
-#       + 10
-#       + 10
-#       + key_clear_button.winfo_reqwidth()
-#       + 10)
 
 # Start the main event loop
 app.mainloop()

@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from symmetric_encryption import generate_key, load_key, encrypt_message, decrypt_message, InvalidToken, BinasciiError
 
-debug_mode = True # Set to False to disable debug mode
+debug_mode = False # Set to False to disable debug mode
 
 
 def browse_files() -> None:
@@ -14,14 +14,14 @@ def browse_files() -> None:
 
         # Open and read file
         with open(filename, 'r') as file:
-            print(top_text_field.get('1.0', 'end-1c'))
+            # print(top_text_field.get('1.0', 'end-1c'))
             top_text_field.delete('1.0', 'end')
             top_text = file.read()
             top_text_field.insert('1.0', top_text)
-            print(top_text_field.get('1.0', 'end-1c'))
-        print(filename)
+            # print(top_text_field.get('1.0', 'end-1c'))
+        # print(filename)
     except FileNotFoundError:
-        print('No file selected')
+        # print('No file selected')
         return None
 
 
@@ -41,17 +41,18 @@ def save_file() -> None:
     # Open and write file
     with open(filename, 'w') as file:
         file.write(bottom_text_field.get('1.0', 'end-1c'))
-
-    print(filename)
+    if debug_mode:
+        print(filename)
 
 
 def convert_text() -> None:
     top_text = top_text_field.get('1.0', 'end-1c')
-    print(top_text)
     bottom_text = bottom_text_field.get('1.0', 'end-1c')
-    print(bottom_text)
-    print(key.get())
-    print(radio_bool.get())
+    if debug_mode:
+        print(top_text)
+        print(bottom_text)
+        print(key.get())
+        print(radio_bool.get())
 
     if radio_bool.get():
         # TODO: Complete the encrypt function and also the decrypt function
@@ -72,14 +73,7 @@ def convert_text() -> None:
         bottom_text_field.insert('1.0', cipher_text)
         bottom_text_field.config(state='disabled')  # Disable editing
 
-        print(cipher_text)
     else:
-        print('Decrypt Selected')
-        if key.get() == '':
-            print('Key is empty')
-            # Handle empty key
-            return None
-
         _key = key.get()
         cipher_text = top_text_field.get('1.0', 'end-1c')
 
@@ -96,18 +90,18 @@ def convert_text() -> None:
             bottom_text_field.config(state='disabled')  # Disable editing
             credits_label.config(text='Magpie: Decryption successful',  foreground= 'green')
         elif isinstance(plain_text, InvalidToken):
-            print('Invalid Token error occurred')
+            # print('Invalid Token error occurred')
             credits_label.config(text='Magpie: Invalid Token error occurred', foreground='red')
         elif isinstance(plain_text, Exception):
-            print('Exception occurred during decryption')
+            # print('Exception occurred during decryption')
             credits_label.config(text='Magpie: Exception occurred during decryption', foreground='red')
         elif isinstance(plain_text, BinasciiError):
-            print('Binascii Error occurred')
+            # print('Binascii Error occurred')
             credits_label.config(text='Magpie: Binascii Error occurred', foreground='red')
         else:
-            print('Unknown error occurred')
-            credits_label.config(text='Magpie: Unknown error occurred', foreground='red')
-        print(isinstance(plain_text, InvalidToken), plain_text == InvalidToken, plain_text)
+            # print('Unknown error occurred')
+            credits_label.config(text='Magpie: Unknown error occurred. Please enter correct Cipher text.', foreground='red')
+        # print(isinstance(plain_text, InvalidToken), plain_text == InvalidToken, plain_text)
 
 
 def new_key() -> None:
@@ -117,7 +111,7 @@ def new_key() -> None:
 
 
 def clear_key() -> None:
-    print(key.get())
+    # print(key.get())
     key.set('')
     # convert_text()
 

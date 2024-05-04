@@ -13,6 +13,12 @@
 
 # Miscellaneous
 *.key
+*.png
+*.ico
+!magpie.ico
+!Guided Social preview_4x.png
+!Project Overview.png
+!Social preview_4x.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

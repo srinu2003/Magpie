@@ -108,6 +108,7 @@ def get_key() -> None:
 # app
 app = tk.Tk()
 app.title("Magpie")
+app.iconbitmap(r'magpie.ico')
 # app.geometry("300x150") # for 730p 'ish screens
 app.geometry('685x500')
 app.minsize(width=685, height=500)

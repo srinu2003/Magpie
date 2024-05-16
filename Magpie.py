@@ -3,8 +3,11 @@ from tkinter import ttk
 from tkinter import filedialog
 from symmetric_encryption import generate_key, load_key, encrypt_message, decrypt_message, InvalidToken, BinasciiError
 
+ICON_DATA = b''
+
 
 def browse_files() -> None:
+    """Browse for a file and load its content into the top field."""
     key_lable.setvar(key.get())
     try:
         filename = filedialog.askopenfilename(initialdir="/", title="Select a File",
@@ -20,6 +23,7 @@ def browse_files() -> None:
 
 
 def save_file() -> None:
+    """Save the text in the bottom field to a file."""
     filename = filedialog.asksaveasfilename(initialdir="/", title="Save File",
                                             filetypes=(("Text files", "*.txt*"), ("all files", "*.*")))
     if filename.partition('.')[0] == '':
@@ -38,8 +42,9 @@ def save_file() -> None:
 
 
 def convert_text() -> None:
-    top_text = top_text_field.get('1.0', 'end-1c')
-    bottom_text = bottom_text_field.get('1.0', 'end-1c')
+    """Convert the text in the top field to the desired format and display it in the bottom field.
+    The text is converted based on the radio button selected.
+    If the radio button is selected to encrypt, the text is encrypted and displayed in the bottom field."""
 
     if radio_bool.get():
         # TODO: Complete the encrypt function and also the decrypt function
@@ -108,7 +113,7 @@ def get_key() -> None:
 # app
 app = tk.Tk()
 app.title("Magpie")
-app.iconbitmap(r'magpie.ico')
+app.iconbitmap(r'./magpie_32.ico')
 # app.geometry("300x150") # for 730p 'ish screens
 app.geometry('685x500')
 app.minsize(width=685, height=500)

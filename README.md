@@ -55,6 +55,40 @@ This is a Python project that provides a text encryption and decryption tool usi
 6. Save the encrypted or decrypted text file to the desired location.
 7. Follow the prompts to enter the necessary information for encryption or decryption.
 
+Project Structure:
+```
+CLI.py
+GUI.py
+LICENSE
+main.py
+other/
+    message_security.py
+    verify_hash.py
+plaintext.txt
+README.md
+requirements.txt
+symmetric_encryption.py
+```
+```mermaid
+graph LR;
+    B[other/]
+    B1[message_security.py]
+    B2[verify_hash.py]
+
+    F[symmetric_encryption.py]
+    G[CLI.py]
+    H[GUI.py]
+    I[key.key]
+
+    B --> B1
+    B --> B2
+
+    I --> F
+    F --> G
+    F --> H
+```
+
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

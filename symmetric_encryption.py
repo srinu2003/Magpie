@@ -66,7 +66,7 @@ def encrypt_message(message: str, key: bytes) -> str:
         str: The encrypted message.
 
     """
-    f = Fernet(key)
+    f: Fernet = Fernet(key)
     encrypted_message = f.encrypt(message.encode())
     return encrypted_message.decode()
 
@@ -87,7 +87,7 @@ def decrypt_message(encrypted_message: str, key: bytes) -> str | type[InvalidTok
         BinasciiError: If there is an error with the encrypted message.
         Exception: If any other exception occurs during decryption.
     """
-    f = Fernet(key)
+    f: Fernet = Fernet(key)
     try:
         decrypted_message = f.decrypt(encrypted_message.encode())
     except InvalidToken:
@@ -99,5 +99,5 @@ def decrypt_message(encrypted_message: str, key: bytes) -> str | type[InvalidTok
 
     return decrypted_message.decode()
 
-# print(decrypt_message(encrypt_message('',load_key()),load_key()))
+# print(decrypt_message(encrypt_message('hi',load_key()),load_key()))
 # print(decrypt_message('',load_key()))

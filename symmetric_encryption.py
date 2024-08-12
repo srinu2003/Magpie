@@ -80,7 +80,7 @@ def decrypt_message(encrypted_message: str, key: bytes) -> str | type[InvalidTok
         key (bytes): The key used for decryption.
 
     Returns:
-        str: The decrypted message.
+        str: The decrypted message.     
 
     Raises:
         InvalidToken: If the provided key is invalid.

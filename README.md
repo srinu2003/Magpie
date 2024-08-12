@@ -28,7 +28,7 @@ This is a Python project that provides a text encryption and decryption tool usi
 
 # GUI Tool
 
-![alt text](<Project Overview.png>)
+![alt text](<Project_overview.png>)
 
 This is a Python project that provides a text encryption and decryption tool using symmetric encryption with a graphical user interface (GUI).
 

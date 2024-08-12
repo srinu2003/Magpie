@@ -74,10 +74,11 @@ def convert_text() -> None:
 
         # TODO: Handle the decrypted message based on its type
         # Check the type of the decrypted message
+        bottom_text_field.config(state='normal')  # Enable editing
+        bottom_text_field.delete('1.0', 'end')
         if isinstance(plain_text, str):
             # Insert the decrypted message as a string
-            bottom_text_field.config(state='normal')  # Enable editing
-            bottom_text_field.delete('1.0', 'end')
+
             bottom_text_field.insert('1.0', plain_text)
             bottom_text_field.config(state='disabled')  # Disable editing
             credits_label.config(text='Magpie: Decryption successful', foreground='green')
@@ -87,6 +88,8 @@ def convert_text() -> None:
             credits_label.config(text='Magpie: Exception occurred during decryption', foreground='red')
         elif isinstance(plain_text, BinasciiError):
             credits_label.config(text='Magpie: Binascii Error occurred', foreground='red')
+        elif isinstance(plain_text, ValueError):
+            credits_label.config(text='Magpie: Value Error occurred, key must be 32 url-safe base64-encoded bytes', foreground='red')
         else:
             credits_label.config(text='Magpie: Unknown error occurred. Please enter correct Cipher text.',
                                  foreground='red')
@@ -113,7 +116,7 @@ def get_key() -> None:
 # app
 app = tk.Tk()
 app.title("Magpie")
-app.iconbitmap(r'./magpie_32.ico')
+app.iconbitmap(r'./magpie.ico')
 # app.geometry("300x150") # for 730p 'ish screens
 app.geometry('685x500')
 app.minsize(width=685, height=500)

@@ -55,7 +55,7 @@ This is a Python project that provides a text encryption and decryption tool usi
 6. Save the encrypted or decrypted text file to the desired location.
 7. Follow the prompts to enter the necessary information for encryption or decryption.
 
-Project Structure:
+### Project Structure:
 ```
 CLI.py
 GUI.py
@@ -87,8 +87,43 @@ graph LR;
     F --> G
     F --> H
 ```
-
-
+### System Architecture:
+```mermaid
+graph TD;
+    A[User] -->|Interacts with| B[CLI Interface];
+    A -->|Interacts with| C[GUI Interface];
+    
+    B -->|Calls functions from| D[Symmetric Encryption Module];
+    C -->|Calls functions from| D[Symmetric Encryption Module];
+    
+    D --> E[Generate Key];
+    D --> F[Load Key];
+    D --> G[Encrypt Message];
+    D --> H[Decrypt Message];
+    
+    B -.->|Displays Output| I[(Terminal)];
+    C -.->|Displays Output| J[(GUI Window)];
+    
+    E -->|Stores Key in| K[Key Storage];
+    F -->|Retrieves Key from| K[Key Storage];
+    
+    subgraph Key Management
+        K
+    end
+    
+    subgraph Encryption/Decryption
+        G
+        H
+    end
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style B fill:#bbf,stroke:#333,stroke-width:2px;
+    style C fill:#bbf,stroke:#333,stroke-width:2px;
+    style D fill:#afa,stroke:#333,stroke-width:2px;
+    style I fill:#fbb,stroke:#333,stroke-width:2px;
+    style J fill:#fbb,stroke:#333,stroke-width:2px;
+    style K fill:#fff,stroke:#333,stroke-width:2px;
+```
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
